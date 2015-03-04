@@ -1,0 +1,7 @@
+mediump float PI = 3.14159265358979323846264;
+uniform mediump float stepwidth;
+uniform mediump float stepheight;
+uniform sampler2D videoFrame;
+varying highp vec2 textureCoordinate;
+#define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+

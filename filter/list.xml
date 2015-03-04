@@ -1,0 +1,22 @@
+<root>
+<filter name="normal" title="Normal" iconName="sns_Filter_Normal.png"/>
+<filter name="Dawn" title="Dawn"  iconName="sns_Filter_Dawn.png"/>
+<filter name="Winter" title="Winter"  iconName="sns_Filter_Winter.png"/>
+<filter name="Nostalgia" title="Nostalgia"  iconName="sns_Filter_Nostalgia.png"/>
+<filter name="Flomo" title="Flomo"  iconName="sns_Filter_Flomo.png"/>
+<filter name="Sweet" title="Sweet"  iconName="sns_Filter_Sweet.png"/>
+<filter name="Sea" title="Sea"  iconName="sns_Filter_Sea.png"/>
+<filter name="Monochrome" title="Mono"  iconName="sns_Filter_Mono.png"/>
+<filter name="Outback" title="Outback"  iconName="sns_Filter_Outback.png"/>
+<filter name="Retro1" title="Retro"  iconName="sns_Filter_Retro.png"/>
+<filter name="Metal" title="Metal"  iconName="sns_Filter_Metal.png"/>
+<filter name="Origin" title="Origin"  iconName="sns_Filter_Origin.png"/>
+<filter name="Cross" title="Cross"  iconName="sns_Filter_Cross.png"/>
+<filter name="Sepia" title="Sepia"  iconName="sns_Filter_Sepia.png"/>
+<filter name="Chill" title="Chill"  iconName="sns_Filter_Chill.png"/>
+<filter name="Vintage" title="Vintage"  iconName="sns_Filter_Vintage.png"/>    
+<filter name="Coal" title="Coal" previewQuality="1.0"  iconName="sns_Filter_Coal.png"/>
+<filter name="Comic" title="Comic" previewQuality="1.0"  iconName="sns_Filter_Comic.png"/>
+<filter name="Noir" title="Noir" previewQuality="1.0"  iconName="sns_Filter_Noir.png"/>
+<filter name="Comic2" title="Comic2" previewQuality="1.0"  iconName="sns_Filter_Comic2.png"/>
+</root>

@@ -1,0 +1,30 @@
+<filter>
+	<extrafsh>
+		<![CDATA[
+            #define KERNEL_SIZE 9
+		]]>
+	</extrafsh>
+	<vsh>
+		<![CDATA[
+			void main()
+			{
+            
+            gl_Position = position; 
+            textureCoordinate = vec2(inputTextureCoordinate.xy);
+			}
+		]]>
+	</vsh>
+	<fsh>
+		<![CDATA[
+
+			void main(void)
+			{
+	            mediump vec4 pixelColor = texture2D(videoFrame, textureCoordinate);// weight[0];
+	            gl_FragColor = pixelColor;
+			}
+		]]>
+	</fsh>
+	<steps>
+		<element/>
+	</steps>
+</filter>

@@ -1,0 +1,8 @@
+attribute vec4 position;
+attribute highp vec4 inputTextureCoordinate;
+varying highp vec2 textureCoordinate;
+
+uniform mediump float stepwidth;
+uniform mediump float stepheight;
+
+

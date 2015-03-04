@@ -1,0 +1,436 @@
+<css>
+    <element name="main">
+        <width>320</width>
+    </element>
+    <element name="wrapperProfileContainer">
+        <width>307</width>
+        <height>44</height>
+        <x>auto 6.5</x>
+        <y>10</y>
+        <threePatches>sns_Bubble_Top.png,sns_Bubble_Middle.png,sns_Bubble_Middle.png</threePatches>
+    </element>
+    <element name="userName_location">
+        <x>auto 10</x>
+        <y>center -3</y>
+    </element>
+    <element name="username">
+        <sysfont>14 bold</sysfont>
+		<color>#403f3e</color>
+        <effect>shadow #ffffff 0 1</effect>
+    </element>
+    <element name="origin">
+        <y>auto -1</y>
+        <color>#979797</color>
+		<sysfont>12 bold</sysfont>
+        <maxiumW>226</maxiumW>
+        <effect>shadow #ffffff 0 1</effect>
+    </element>
+    <element name="userName_not_location">
+        <x>auto 10</x>
+        <y>center -3</y>
+    </element>
+    <element name="only_username">
+        <y>5</y>
+        <sysfont>14 bold</sysfont>
+		<color>#403f3e</color>
+        <effect>shadow #ffffff 0 1</effect>
+    </element>
+    <element name="timeContainer">
+        
+        <x>right -5</x>
+    </element>
+    <element name="timeIcon">
+        <y>12</y>
+    </element> 
+	<element name="time">
+        <y>6</y>
+        <x>auto 1</x>
+        <height>20</height>
+        <sysfont>11</sysfont>
+		<color>#979797</color>
+        <effect>shadow #ffffff 0 1</effect>
+    </element>
+    <element name="ContainerWeibo">
+        <y>auto -5</y>
+        <x>8.5</x>
+        <width>290</width>
+        <height>10</height>
+    <threePatches>sns_Bubble_Shout_Top.png,sns_Bubble_Shout_Middle.png,sns_Bubble_Shout_Bottom.png</threePatches>
+    </element>
+    <element name="weiboDescContainer">
+        <y>center</y>
+        <x>5</x>
+    </element>
+    <element name="weiboDesc">
+        <x>5</x>
+        <y>5</y>
+        <width>280</width>
+        <sysfont>14</sysfont>
+    </element>
+     <element name="nonedivWeibo">
+    <height>5</height>
+    <y>auto</y>
+          </element>
+	<element name="photo">
+        <x>5</x>
+        <y>5</y>
+        <animation>1</animation>
+        <progressable>1</progressable>
+        <backgroundColor>#3d434b</backgroundColor>
+    </element>
+    <element name="photobackground">
+        <y>auto -1</y>
+        <x>10</x>
+        <maxiumW>300</maxiumW>
+        <effect>border white 5</effect>
+        <backgroundColor>#3d434b</backgroundColor>
+    </element>
+    <element name="leftShadow">
+        <x>6.5</x>
+        <y>auto</y>
+        <width>3.5</width>
+        <outOfFlow>1</outOfFlow>
+    </element>
+    <element name="rightShadow">
+        <x>310</x>
+        <y>auto</y>
+        <width>3.5</width>
+        <outOfFlow>1</outOfFlow>
+    </element>
+    <element name="videoPlay">
+        <position>center</position>
+    </element>
+	<element name="copyfilterIcon">
+        <x>right </x>
+		<y>bottom </y>
+		<width>40</width>
+		<height>40</height>
+	</element>
+    <element name="videoTime">
+        <x>5</x>
+        <y>bottom -5</y>
+        <width>40</width>
+        <height>20</height>
+        <backgroundColor>#80000000</backgroundColor>
+        
+    </element>
+    <element name="lblVideoTime">
+        <position>center</position>
+        <sysfont>12 bold</sysfont>
+        <color>#ffffff</color>
+    </element>
+	<element name="textContainer">
+        <x>6.5</x>
+		<y>auto</y>
+		<width>307</width>
+        <!--backgroundColor>#F1F1EE</backgroundColor-->
+	</element>
+	<element name="textContainerBackGround">
+        
+	</element>
+    
+    <element name="textTopNone">
+        <width>270</width>
+        <height>7</height>
+        <x>0</x>
+        <y>0</y>
+    </element>
+    <element name="textTopNone_1">
+        <width>270</width>
+        <height>9</height>
+        <x>0</x>
+        <y>0</y>
+    </element>
+    
+    <element name="likers">
+        <y>auto</y>
+        <x>3.5</x>
+    </element>
+    <element name="likerDescContainer">
+    </element>
+    <element name="likerDesc">
+        <x>30</x>
+		<y>7</y>
+        <width>240</width>
+        <sysfont>14</sysfont>
+		<color>#403f3e</color>
+    </element>
+    <element name="likerProfileImageContainerAlias">
+        <x>8</x>
+        <y>11</y>
+    </element>
+	<element name="bottomLineLike">
+        <y>auto 7</y>
+        <width>300</width>
+		
+    </element>
+    <element name="likersW">
+        <y>auto 1</y>
+        <x>3.5</x>
+    </element>
+    <element name="likerDescContainerW">
+    </element>
+    <element name="likerDescW">
+        <x>25</x>
+		<y>7</y>
+        <width>240</width>
+        <sysfont>14</sysfont>
+		<color>#403f3e</color>
+    </element>
+    <element name="likerProfileImageContainerAliasW">
+        <x>8</x>
+        <y>11</y>
+    </element>
+	<element name="bottomLineLikeW">
+        <y>auto 7</y>
+        <width>300</width>
+    </element>
+    
+    <element name="Container_1">
+        <y>auto 7</y>
+        <x>3.5</x>
+    </element>
+    <element name="descContainer">
+        <x>15</x>
+        <height>25</height>
+    </element>
+	<element name="desc">
+        <x>20</x>
+		<y>center 1</y>
+        <width>240</width>
+        <sysfont>14</sysfont>
+		<color>#403f3e</color>
+    </element>
+    
+	<element name="nonediv">
+        <height>7</height>
+        <x>auto</x>
+        <y>auto</y>
+    </element>
+    
+    <element name="profileContainer">
+        <y>6.5</y>
+        <x>8.5</x>
+		<width>295</width>
+		<height>30</height>
+	</element>
+    
+	<element name="profileImageAlias">
+        <y>2</y>
+   <x>5</x>
+        <height>25</height>
+        <width>25</width>
+        <!--effect>
+         radius 5
+         </effect-->
+        <backgroundColor>#3d434b</backgroundColor>
+    </element>
+    
+	<element name="profileImage">
+        <height>30</height>
+        <width>30</width>
+        <backgroundColor>#3d434b</backgroundColor>
+    </element>
+	<element name="timeAlias">
+        <x>225</x>
+        <y>15</y>
+        <width>35</width>
+        <height>20</height>
+        <sysfont>11</sysfont>
+		<color>#979797</color>
+        <textAlignment>right</textAlignment>
+    </element> 
+    
+    
+    <element name="footOfflineBar">
+        <x>6.5</x>
+        <y>auto</y>
+        <width>307</width>
+         <userEnable>0</userEnable>
+    </element>
+    <element name="btn_Offline_Bar">
+		<x>center</x>
+      
+        <width>260</width>
+         <sysfont>4</sysfont>
+        
+    </element>
+    
+    <element name="footBar">
+        <x>6.5</x>
+        <y>auto</y>
+    </element>
+    <element name="btn_like">
+		
+    </element>
+    <element name="likecnt">
+        <userEnable>0</userEnable>
+        <x>21</x>
+		<y>auto</y>
+        <width>36</width>        
+        <height>22</height>
+    </element>
+    <element name="likeLable">
+        <userEnable>0</userEnable>
+        <x>center </x>
+        <y>center 1</y>
+        <sysfont>12 bold</sysfont>
+        <color>#4d4c4e</color>
+        <effect>shadow #eaeaea 0 0.5</effect>
+    </element>
+    <element name="btn_comment">
+        <x>auto</x>
+    </element>
+    <element name="commentcnt">
+        <x>21</x>
+        <userEnable>0</userEnable>
+        <width>55</width>        
+        <height>22</height>
+    </element>
+    <element name="commentLable">
+        <userEnable>0</userEnable>
+        <x>center 2</x>
+        <y>center 1</y>
+        <sysfont>12 bold</sysfont>
+        <color>#4d4c4e</color>
+        <effect>shadow #eaeaea 0 0.5</effect>
+    </element>
+    <element name="btn_report">
+        <x>auto</x>
+    </element>
+    <element name="btn_share">
+        <x>auto</x>
+    </element>
+    <element name="shareLable">
+		<x>center 1</x>
+        <y>center</y>
+        <userEnable>0</userEnable>
+        <sysfont>12 bold</sysfont>
+        <color>#4d4c4e</color>
+        <effect>shadow #eaeaea 0 0.5</effect>
+    </element>
+	<element name="bottomLine">
+        <y>auto</y>
+        <width>300</width>
+      
+    </element>
+	<element name="bottomLine_1">
+        <y>auto</y>
+        <width>300</width>
+    </element>
+    <element name="Container_bottom">
+        <y>auto</y>
+        <width>270</width>
+        <x>3.5</x>
+        <height>35</height>
+    </element>
+    <element name="viewAll">
+        <y>center 1</y>
+        <x>center 15</x>
+        <sysfont>11 bold</sysfont>
+        <color>#545252</color>
+    </element>
+    
+    <element name="Container_2">
+        <y>auto 7</y>
+        <x>3.5</x>
+    </element>
+    
+    <element name="textTopNone_2">
+        <width>270</width>
+        <height>9</height>
+        <x>0</x>
+        <y>0</y>
+    </element>
+    <element name="nonedivTail">
+        <width>270</width>
+        <height>4</height>
+        <x>0</x>
+        <y>auto</y>
+    </element>  
+    <element name="profileImageContainerAlias_2">
+        <x>-15</x>
+        <y>10</y>
+        <width>27</width>
+        <height>27</height>
+        <!--effect>
+         radius 5
+         </effect-->
+        <backgroundColor>#ffffff</backgroundColor>
+    </element>
+	<element name="profileImageAlias_2">
+        <y></y>
+        <height>25</height>
+        <width>25</width>
+        <x>5</x>
+        <!--effect>
+         radius 5
+         </effect-->
+        <backgroundColor>#3d434b</backgroundColor>
+    </element>
+    <element name="descContainerTop_2">
+        <y>auto</y>
+        <x>15</x>
+        <height>25</height>
+        <width>240</width>
+    </element>
+    <element name="descContainer_2">
+        <x>15</x>
+        <y>-2</y>
+        <height>25</height>
+    </element>
+	<element name="desc_2">
+        <x>20</x>
+		<y>center</y>
+        <width>240</width>
+        <sysfont>14</sysfont>
+		<color>#403f3e</color>     
+    </element>
+	<element name="image_2">
+        <x>20</x>
+		<y>auto 7</y>
+        <miny>32</miny>
+    </element>
+    <element name="location_2">
+        <x>20</x>
+        <y>auto 4</y>
+    </element>
+    <element name="locationIcon_2">
+        <width>11</width>        
+        <height>14</height>
+        <userEnable>0</userEnable>
+    </element>
+    <element name="origin_2">
+        <x>15</x>
+        <y>1</y>
+        <color>#979797</color>
+		<sysfont>12</sysfont>
+        <userEnable>0</userEnable>
+        <width>230</width>
+    </element>
+	<element name="nonediv_2">
+        <height>7</height>
+        <x>auto</x>
+        <y>auto</y>
+    </element>
+	<element name="bottomLine_2">
+        <y>auto</y>
+        <width>300</width>
+   
+        
+    </element>
+    <element name="videoPlay_2">
+        <position>center</position>
+    </element>
+	<element name="bottomLine_X">
+        <y>auto 10</y>
+        <width>300</width>
+       
+        
+    </element>
+    <element name="bottomLine">
+        <y>auto 10</y>
+        <width>320</width>
+ 
+    </element>
+</css>

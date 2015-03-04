@@ -1,0 +1,125 @@
+body{
+	margin:0px;
+	padding:0px;
+	font-family:Helvetica Neue ;/*{global-font-family} , Arial, sans-serif */
+	background:#f0efe8;/* url(sns_Background.png) repeat;*/
+	overflow:hidden;
+}
+*{
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+    -webkit-user-select:none;
+    -webkit-touch-callout:none;
+}
+#profileContent{
+	background:url(sns_Profile_Background@2x.png) repeat;
+	width:320px;
+	height:auto;
+	background-size:cover;
+}
+#prolfile-top{
+	position:relative;
+	height:105px;
+}
+#photo{
+	width:75px;
+	height:75px;
+	background-size:cover;
+	position:absolute;
+	left:7px;
+	top:15px;
+	-webkit-border-radius:3px;
+}
+#username{
+	position:absolute;
+	color:#fff;
+	font-weight:bold;
+	left:91px; 
+	top:16px;
+	font-size:18px;
+	text-shadow: 0 -1px 0px #151515;
+}
+.follows{
+	background:url(sns_Follower_Following_Button@2x.png) no-repeat;
+	background-size:cover;
+	width:87px;
+	height:59px;
+	color:#fff;
+	font-weight:bold;
+	font-size:14px;
+	text-shadow: 0 -1px 0px #151515;
+	top:42px;
+}
+#followers{
+	position:absolute;
+	left:81px;
+	background:url(sns_Follower_Button@2x.png) no-repeat;
+}
+#following{
+	position:absolute;
+	left:157px;
+	background:url(sns_Following_Button@2x.png) no-repeat;
+}
+#gallery{
+	position:absolute;
+	left:233px;
+	background:url(sns_Profile_Gallery_Button@2x.png) no-repeat;
+}
+.number{
+	position:absolute;
+	width:100%;
+	height:30px;
+	left:0px;
+	top:8px;
+	text-align:center;
+	line-height:25px;
+	font-size:16px;
+}
+.followType{
+	position:absolute;
+	width:100%;
+	height:30px;
+	left: 0px;
+	top: 23px;
+	line-height:30px;
+	text-align:center;
+	font-size:10px;
+	font-weight:bold;
+}
+
+#follow{
+	color:#fff;
+	margin-left:10px;
+	width:304px;
+	font-size:12px;
+	font-weight:bold;
+	height:40px;
+	padding-bottom: 5px;
+}
+#isFollow{
+    float:left;
+    width:220px;
+    word-wrap:break-word;
+    text-overflow:hidden;
+}
+#btn_follow{
+	float: right;
+	width:81px;
+	height:40px;
+	line-height:36px;
+	background-size: cover;
+	font-size:12px;
+    text-shadow: 0px -1px 0 #5f5d5b,0px 0px 0 #333,0px 0px 0 #444;
+	text-align:center;
+	text-shadow: 0  -1px 0px #151515 ;
+	margin-top:-5px;
+}
+.follow{
+	background:url(sns_Follow_Button@2x.png) no-repeat center center;
+}
+
+.followed{
+	background:url(sns_Unfollow_Button@2x.png) no-repeat center center;
+}
+.button-active{
+	opacity:.5;
+}

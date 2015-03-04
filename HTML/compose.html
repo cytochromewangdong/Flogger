@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Flogger</title>
+		<link rel="stylesheet"  href="compose.css"/>
+		<script src="jquery-1.7.1.min.js" ></script>
+		<script src="jquery.util.js" ></script>
+		
+		<script>
+			var actionUrl = "myapp://doAction/compose/?";
+			var number = 140;
+			$(function(){
+				$("#context").bind("keydown textInput", onTextInput).attr("maxlength", number);
+			});
+			
+			function onTextInput(){
+				setTimeout(function(){
+					var len = number - $("#context").val().length;
+					var postData = {cmd: "countLen", length: ""+len};
+					
+					len = null;
+					window.location.href = actionUrl + $.json2string(postData);
+				}, 1);
+			};
+			function clearData(){
+				$("#context").val("");
+			};
+			function appendContext(value){
+				$("#context").val($("#context").val() + value);
+				$("#context").trigger("textInput");
+			};
+			function getText(){
+				return $("#context").val();
+			};
+			
+		</script>
+	</head>
+	
+	<body>
+		<div style="height:10px;width:100%;">&nbsp;</div>
+		<div id="context-box">
+			<textarea id="context" placeholder="Enter description here"></textarea>
+		</div>
+		<!--<div id="actionButton">
+			<div id="addTag" actionType="AddTag">&nbsp;</div>
+			<div id="addAt" actionType="AddAt">&nbsp;</div>
+			<div id="GeoTag" actionType="GeoTag">&nbsp;</div>
+			<div id="location"></div>
+			<div id="number"></div>
+		</div> -->
+	</body>
+</html>

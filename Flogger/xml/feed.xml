@@ -1,0 +1,100 @@
+<body>
+    <div id="wrapperProfileContainer">
+        <div id="profileContainer">
+            <div x-type="btn" id="profileImage" placeholder="sns_Placeholder_Profile_Picture.png" actionType="profile" />
+            <div id="userName_location">
+                <div id="username" fill-data="username" x-type="label"/>
+                <div   id="origin" fill-data="location" x-type="label" actionType="map"/>
+            </div>
+            <div id="userName_not_location">
+                <div id="only_username" fill-data="username" x-type="label"/>
+            </div>
+            <div id="timeContainer">
+                <div x-type="img" id="timeIcon" src="sns_Feed_Clock.png"/>
+                <div id="time"  fill-data="time" x-type="label"/>
+            </div>
+        </div>
+    </div>
+    <div x-type="img" id="leftShadow" src="sns_Bubble_Left_Shadow.png"/><!-- src="Bubble_Left_Shadow.png" -->
+    <div x-type="img" id="rightShadow" src="sns_Bubble_Right_Shadow.png"/>
+    <div x-type="img" id="photobackground">                                   
+        <div x-type="img" placeholder="sns_Placeholder_Photo.png" id="photo" actionType="photo">
+            <div x-type="img" id="videoPlay" src="sns_Play_Button.png" actionType="playVideo"/>
+            <div id="copyfilterIcon" x-type="btn" src="sns_copyfilter.png" actionType="copyfilter"/>
+            <div id="videoTime">
+                <div id="lblVideoTime" fill-data="videoTime">0:28</div>
+            </div> 
+        </div>
+    </div>
+
+    <!-- x-type="9patch" -->
+    <div x-type="img" id="textContainer" src="sns_Bubble_Middle.png" actionType="comment">
+        <div id="textTopNone"></div>
+        <!--likers start-->
+        <div id="likers">
+            <div x-type="btn" id="likerDescContainer">
+                <div x-type="html" id="likerDesc" actionType="comment" fill-data="likers"/>
+            </div>
+            <div id="bottomLineLike" x-type="img" src="sns_Bubble_Line.png"/>
+            <div x-type="img" id="likerProfileImageContainerAlias" src="sns_Feed_Likes.png">
+            </div>
+        </div>
+        <!--likers end-->
+        <div id="Container_1">
+            <div x-type="btn" id="profileImageAlias" actionType="profile" placeholder="sns_Placeholder_Profile_Picture.png"/>
+            <div x-type="btn" id="descContainer">
+                <div x-type="html" id="desc" actionType="comment" fill-data="newHypertext"/>
+            </div>
+            <div id="nonediv"></div>
+            <div id="bottomLine_1" x-type="img" src="sns_Bubble_Line.png"/>
+        </div>
+        <!--WEIBO  start-->
+        <div id="ContainerWeibo">
+            <div x-type="btn" id="weiboDescContainer">
+                <div x-type="html" id="weiboDesc" actionType="comment" fill-data="newHypertext"/>
+                 <div id="nonedivWeibo"></div>
+            </div>
+            <!--div id="bottomLine_1" x-type="img" src="sns_Bubble_Line.png"/-->
+        </div>
+         <!--WEIBO  end-->
+        <!--WEIBO likers start-->
+        <div id="likersW">
+            <div x-type="btn" id="likerDescContainerW">
+                <div x-type="html" id="likerDescW" actionType="comment" fill-data="likers"/>
+            </div>
+            <div id="bottomLineLikeW" x-type="img" src="sns_Bubble_Line.png"/>
+            <div x-type="img" id="likerProfileImageContainerAliasW" src="sns_Feed_Likes.png">
+            </div>
+        </div>
+        <!--WEIBO likers end-->
+        <div id="Container_bottom">
+            <div id="viewAll" fill-data="viewAll">View all 100 comments</div>
+            <div id="bottomLine_X" x-type="img" src="sns_Bubble_Line.png"/>
+        </div>
+        <div x-type="img" id="Container_2" loopMore="2">
+            <div x-type="btn" id="descContainer_2" actionType="comment">
+                <div x-type="html" id="desc_2"  actionType="comment" fill-data="hypertext_2"/>
+            </div>
+            <div id="nonediv_2"></div>
+            <div id="bottomLine_2" x-type="img" src="sns_Bubble_Line.png"/>
+            <div x-type="btn" id="profileImageAlias_2" placeholder="sns_Placeholder_Profile_Picture.png"/>
+        </div>
+        <div id="nonedivTail"></div>
+    </div>
+    
+    <div id="footBar">
+        <div id="btn_like"  x-type="img" actionType="like">
+            <!--div id="likecnt">
+             <div  fill-data="likecnt" id="likeLable" x-type="label" >0</div>
+             </div-->
+        </div>
+        <div id="btn_comment" x-type="btn"  src="sns_Comment_Button.png"  actionType="writeComment" pressedImage="sns_Comment_Button_Pressed.png"/>
+        <div id="btn_report" x-type="btn"  src="sns_Flag_Button.png"  actionType="report" pressedImage="sns_Flag_Button_Pressed.png"/>
+        <div id="btn_share" x-type="btn"   src="sns_Share_Button.png"  actionType="share" pressedImage="sns_Share_Button_Pressed.png"/>
+        <!--div id="shareLable" x-type="label" >Share</div-->
+    </div>
+    <div id="footOfflineBar" x-type="btn"  src="sns_Offline_Bar.png">
+        <div id="btn_Offline_Bar" x-type="html" fill-data="btn_Offline_Word"/>
+    </div>
+    <div id="bottomLine" x-type="img" src="sns_Feed_Line.png"/>
+</body>

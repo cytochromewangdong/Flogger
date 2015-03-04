@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[NetworkManager addSyncTask:]:NetworkManager.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "task.networkDelegate">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ShareSettingViewController tableView:cellForRowAtIndexPath:]:ShareSettingViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[FeedViewCell setIssueInfo:]:FeedViewCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.locationLabel.text">
+            </PersistentString>
+            <PersistentString
+               value = "_issueInfo.bmiddleurl">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ClTableView tableView:numberOfRowsInSection:]:ClTableView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.dataArr.count">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[FeedsViewController showView:]:FeedsViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.contentView">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[FloggerPrefetch transactionFinished:]:FloggerPrefetch.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "com.externalplatforms">
+            </PersistentString>
+            <PersistentString
+               value = "[GlobalData sharedInstance].exPlatform.externalplatforms">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[SuggestUserViewCell setAccount:]:SuggestUserViewCell.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ASIHTTPRequest requestStarted]:ASIHTTPRequest.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ShareSettingViewController getExternalAccount:]:ShareSettingViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[GlobalData sharedInstance].myAccount.externalaccounts">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ClMoreViewCell layoutSubviews]:ClMoreViewCell.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "_activityIndicatorView.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[FeedGridPageTableView tableView:cellForRowAtIndexPath:]:FeedGridPageTableView.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.dataArr">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[FriendListViewController transactionFinished:]:FriendListViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[ProfileViewController transactionFinished:]:ProfileViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[BaseNetworkViewController setLoading:]:BaseNetworkViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.isViewLoaded">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

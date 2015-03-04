@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Flogger</title>
+		<link rel="stylesheet"  href="viewer.css"/>
+		<script src="jquery-1.7.1.min.js" ></script>
+		<script src="jquery.util.js" ></script>
+		<script>
+			var actionUrl = "myapp://doAction/feed/?",
+				userUID = 0,
+				issueId = 0;
+			$(function(){
+				$("#username, #photo").click(function(){
+					var actionType=$(this).attr("actionType");
+					
+					if(issueId){
+						var postData={
+							cmd: actionType, // profile
+							issueId: issueId,
+							userUID: userUID
+						};
+						execAction(postData);
+					}
+				});
+			});
+			
+			function execAction(postData){
+				window.location.href = actionUrl + $.json2string(postData);
+			};
+			
+			function fillData(data){
+				userUID = data.userUID;
+				issueId = data.id;
+				$("[fill-data]").each(function(){
+					var key = $(this).attr("fill-data");
+					if(key){
+						$(this).html((data[key]===undefined || data[key] ==null) ? "&nbsp;" : data[key]);
+					}
+				});
+				$("#profileImage").addClass("image-loading");
+				
+				switch(data.issuecategory){
+					case 1: //照片
+						$("#viwer-photo").css({
+							"width": (data.photowidth || defaultWidth) + "px", 
+							"height": (data.photoheight || defaultHeight) + "px",
+							"display": "block"});
+						$("#viwer-video").css("display","none");
+						$("#viwer-photo").addClass("image-loading");
+						break;
+					case 2: //视频
+						var html = "<video id=\"eleVideo\" src=\""+data.videourl+"\" style=\"width:100px;height:100px;\" poster=\""+data.postorurl+"\">&nbsp;</video>";
+						$("#viwer-photo").html(html);
+						
+						$("#viwer-video").css("display","block");
+						$("#viwer-photo").css("display","none");
+						break;
+					default: //weibo
+						$("#viwer-video").css("display","none");
+						$("#viwer-photo").css("display","none");
+						break;
+				}
+			};
+			function setMainImage(url)
+			{
+				$("#viwer-photo").removeClass("image-loading");
+				$("#viwer-photo").css({"background": "url("+url+") no-repeat", "background-size": "cover" });
+			}
+			function setProfileImage(url)
+			{
+				$("#profileImage").css({"background": "url("+url+") no-repeat", "background-size": "cover" });
+			}
+			function hostCallBack(data){};
+			
+			function clearData(){
+				$("[fill-data]").each(function(){
+					var key = $(this).attr("fill-data");
+					if(key){
+						$(this).html("");
+					}
+				});
+				$("#viwer-video").css("display","none").empty();
+				$("#viwer-photo").css({
+					"display": "none",
+					"background": "",
+					"background-size": "16px 16px"
+				});
+				$("#profileImage").css({
+					"background": "",
+					"background-size": "16px 16px"
+				});
+			};
+		</script>
+	</head>
+	
+	</body>
+        <div style="height:10px;width:100%;">&nbsp;</div>
+        <div class="data-foot" style="padding-bottom:10px;">
+            <div class="datainfo">
+                <div id="profileImage" actionType="profile">
+                    
+                </div>
+                <div class="description">
+                    <div>
+                        <div class="info">
+                            <span id="username" fill-data="username" actionType="profile"></span>&nbsp;<span class="desc" fill-data="hypertext"></span>
+                        </div>
+                        <div class="time" style="width:25px">
+                            <span fill-data="time"></span>
+                        </div>
+                        <div style="clear:both"></div>
+                    </div>
+                    <div id="viwer-photo" style="display:block; background: url(1.jpg) no-repeat; background-size:cover;">
+                        
+                    </div>
+                    <div id="viwer-video">
+                    
+                    </div>
+                    
+                    <div class="origin" fill-data="location"></div>
+                </div>
+                <div style="clear:both"></div>
+            </div>
+        </div>
+        <div class="line"></div>
+	</body>
+</html>
+	

@@ -1,0 +1,30 @@
+<body>
+	<div id="mainboard" >
+		<div id="bodyContainer" x-type="img"  src="sns_Profile_Background.png">
+			<div id="profilePhoto" x-type="img" actionType="photo" src="ns_Placeholder_Profile_Picture.png"></div>
+			<div id="username" fill-data="profileName"></div>
+			<div id="followers" x-type="btn" src="sns_Follower_Button.png" actionType="followers">
+				<div id="followers-number" fill-data="followerscount" x-type="label">0</div>
+				<div id="followers-label" fill-data="lblFollowersCount" x-type="label">Followers</div>
+			</div>
+			<div id="following" x-type="btn" src="sns_Following_Button.png" actionType="following">
+				<div id="following-number" fill-data="friendscount" x-type="label">0</div>
+				<div id="following-label" fill-data="lblFollowingCount" x-type="label">Following</div>
+			</div>
+			<div id="gallery" x-type="btn" src="sns_Profile_Gallery_Button.png" actionType="gallery">
+				<div id="gallery-number" fill-data="gallerycount" x-type="label">0</div>
+				<div id="gallery-label" fill-data="lblGalleryCount" x-type="label">Gallery</div>
+			</div>
+			<div id="followContainer">
+				<div id="follow" fill-data="lblFollowing"></div>
+				<div id="follow-btn" x-type="btn" src="sns_Follow_Button.png" actionType="follow">
+					<div id="followBtnLabel" fill-data="followBtnLabel" x-type="label">
+						Follow
+					</div>
+				</div>
+			</div>
+			<div id="noneDiv"></div>
+		</div>
+		<div id="bottomLine"></div>
+	</div>
+</body>

@@ -1,0 +1,1285 @@
+<root>
+    <filter name="radiusmerge">
+        <vsh>
+            <![CDATA[
+                precision lowp float;
+                attribute vec4 position;
+                attribute vec4 inputTextureCoordinate;
+                varying vec2 textureCoordinate;
+                
+                void main()
+                {
+                
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision lowp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame;
+                uniform sampler2D videoFrame2;
+                uniform float fd_degree;
+                
+                uniform float fd_ratial;
+                uniform vec2 fd_center;
+                uniform float fd_radius;
+                varying vec2 textureCoordinate;
+                
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame, textureCoordinate);
+                vec4 pixelColor2 = texture2D(videoFrame2, textureCoordinate);
+                
+                mediump float d =distance(vec2(textureCoordinate.x*fd_ratial,textureCoordinate.y),vec2(fd_center.x*fd_ratial,fd_center.y));
+                float alpha = d>fd_radius?1.0:smoothstep(fd_radius*0.4,fd_radius,d);
+                vec4 result = mix(pixelColor, pixelColor2, alpha);
+                pixelColor = CLAMP_COLOR(vec4(result.rgb, 1.0));
+                
+                gl_FragColor = pixelColor;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">
+                1
+            </element>
+            <element variableName="videoFrame" vartype="int">
+                0
+            </element>
+            
+            <element variableName="fd_center">
+                0,0
+            </element>
+            <element variableName="fd_radius">
+                0,0
+            </element>
+            <element variableName="fd_ratial">
+                0.75
+            </element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    
+    <filter name="titlradius">
+        <vsh>
+            <![CDATA[
+                attribute vec4 position;
+                attribute lowp vec4 inputTextureCoordinate;
+                varying lowp vec2 textureCoordinate;
+                
+                void main()
+                {
+                
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision lowp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame;
+                uniform float fd_ratial;
+                uniform vec2 fd_center;
+                uniform float fd_radius;
+                varying lowp vec2 textureCoordinate;
+                
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame, textureCoordinate);
+                
+                float d =distance(vec2(textureCoordinate.x*fd_ratial,textureCoordinate.y),vec2(fd_center.x*fd_ratial,fd_center.y));
+                float blur = 0.9;
+                pixelColor = d>fd_radius?vec4(1.0,1.0,1.0,blur):vec4(1.0,1.0,1.0,smoothstep(fd_radius*0.4,fd_radius,d)*blur);
+                gl_FragColor = pixelColor;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame" vartype="int">
+                0
+            </element>
+            <element variableName="fd_ratial">
+                0
+            </element>
+            <element variableName="fd_center">
+                0,0
+            </element>
+            <element variableName="fd_radius">
+                0,0
+            </element>
+        </uniforms>
+        <steps>
+            <element blend="1"/>
+        </steps>
+    </filter>
+    
+    <filter name="filterstrenth">
+        <vsh>
+            <![CDATA[
+                precision lowp float;
+                attribute vec4 position;
+                attribute vec4 inputTextureCoordinate;
+                varying vec2 textureCoordinate;
+                
+                void main()
+                {
+                
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision lowp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame;
+                uniform sampler2D videoFrame2;
+                uniform mediump float fd_degree;
+                varying vec2 textureCoordinate;
+                
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame, textureCoordinate);
+                vec4 pixelColor2 = texture2D(videoFrame2, textureCoordinate);
+                mediump vec4 result =  mix(pixelColor, pixelColor2, fd_degree);
+                pixelColor = CLAMP_COLOR(vec4(result.rgb, pixelColor.a));
+                gl_FragColor = pixelColor;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">
+                1
+            </element>
+            <element variableName="videoFrame" vartype="int">
+                0
+            </element>
+            <element variableName="fd_degree">
+                0
+            </element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    
+   
+    <filter name="liveblurnew">
+        <vsh>
+            <![CDATA[
+                attribute lowp vec4 position;
+                attribute lowp vec4 inputTextureCoordinate;
+                varying lowp vec2 textureCoordinate;
+                
+                varying lowp vec2 textureCoordinateBlur1;
+                varying lowp vec2 textureCoordinateBlur2;
+                varying lowp vec2 textureCoordinateBlur3;
+                varying lowp vec2 textureCoordinateBlur4;
+ 				uniform lowp vec2  fd_blur_orientation; 
+                uniform lowp float stepwidth;
+                uniform lowp float stepheight;
+                uniform mediump float offset[2];
+                void main()
+                {
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                
+                lowp vec2 step = vec2(stepwidth,stepheight);
+                step = fd_blur_orientation * step;
+                textureCoordinateBlur1 = textureCoordinate + step*offset[0];
+                textureCoordinateBlur2 = textureCoordinate + step*offset[1];
+                
+                textureCoordinateBlur3 = textureCoordinate - step*offset[0];
+                textureCoordinateBlur4 = textureCoordinate - step*offset[1];
+                
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision lowp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame2;
+                uniform float weight[3];
+                
+                varying lowp vec2 textureCoordinate;
+                
+                varying lowp vec2 textureCoordinateBlur1;
+                varying lowp vec2 textureCoordinateBlur2;
+                varying lowp vec2 textureCoordinateBlur3;
+                varying lowp vec2 textureCoordinateBlur4;
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame2, textureCoordinate);
+                pixelColor = pixelColor * weight[0];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur1) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur2) * weight[2];
+                
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur3) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur4) * weight[2]; 
+                
+                gl_FragColor =  pixelColor/0.99960886;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">1</element>
+            <element variableName="fd_blur_orientation">1.0,0.0</element>
+            <element variableName="offset">1.2916107, 3.1119470</element>
+            <element variableName="weight">0.3068787,0.3222591,0.0241058</element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+
+    <filter name="blur4low">
+        <vsh>
+            <![CDATA[
+                precision lowp float;
+                attribute vec4 position;
+                attribute vec4 inputTextureCoordinate;
+                varying vec2 textureCoordinate;
+                
+                varying vec2 textureCoordinateBlur1;
+                varying vec2 textureCoordinateBlur2;
+                varying vec2 textureCoordinateBlur3;
+                varying vec2 textureCoordinateBlur4;
+ 				uniform vec2 fd_blur_orientation; 
+                uniform float stepwidth;
+                uniform float stepheight;
+                uniform mediump float offset[2];
+                void main()
+                {
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                
+                mediump vec2 step = vec2(stepwidth,stepheight);
+                step = fd_blur_orientation * step;
+                textureCoordinateBlur1 = textureCoordinate + step*offset[0];
+                textureCoordinateBlur2 = textureCoordinate + step*offset[1];
+                
+                textureCoordinateBlur3 = textureCoordinate - step*offset[0];
+                textureCoordinateBlur4 = textureCoordinate - step*offset[1];
+                
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision lowp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame2;
+                uniform float weight[3];
+                
+                varying lowp vec2 textureCoordinate;
+                
+                varying lowp vec2 textureCoordinateBlur1;
+                varying lowp vec2 textureCoordinateBlur2;
+                varying lowp vec2 textureCoordinateBlur3;
+                varying lowp vec2 textureCoordinateBlur4;
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame2, textureCoordinate);
+                pixelColor = pixelColor * weight[0];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur1) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur2) * weight[2];
+                
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur3) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur4) * weight[2]; 
+                
+                gl_FragColor =  pixelColor/0.99960886;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">1</element>
+            <element variableName="fd_blur_orientation">1.0,0.0</element>
+            <element variableName="offset">1.2916107, 3.1119470</element>
+            <element variableName="weight">0.3068787,0.3222591,0.0241058</element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    <filter name="blur8low">
+        <vsh>
+            <![CDATA[
+                precision lowp float;
+                attribute vec4 position;
+                attribute vec4 inputTextureCoordinate;
+                varying vec2 textureCoordinate;
+                
+                varying vec2 textureCoordinateBlur1;
+                varying vec2 textureCoordinateBlur2;
+                varying vec2 textureCoordinateBlur3;
+                varying vec2 textureCoordinateBlur4;
+                varying vec2 textureCoordinateBlur5;
+                varying vec2 textureCoordinateBlur6;
+                varying vec2 textureCoordinateBlur7;
+                varying vec2 textureCoordinateBlur8;
+ 				uniform vec2  fd_blur_orientation; 
+                uniform float stepwidth;
+                uniform float stepheight;
+                uniform mediump float offset[4];
+                void main()
+                {
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                
+                mediump vec2 step = vec2(stepwidth,stepheight);
+                step = fd_blur_orientation * step;
+                textureCoordinateBlur1 = textureCoordinate + step*offset[0];
+                textureCoordinateBlur2 = textureCoordinate + step*offset[1];
+                textureCoordinateBlur3 = textureCoordinate + step*offset[2];
+                textureCoordinateBlur4 = textureCoordinate + step*offset[3];
+                
+                textureCoordinateBlur5 = textureCoordinate - step*offset[0];
+                textureCoordinateBlur6 = textureCoordinate - step*offset[1];
+                textureCoordinateBlur7 = textureCoordinate - step*offset[2];
+                textureCoordinateBlur8 = textureCoordinate - step*offset[3];
+                
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision lowp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame2;
+                uniform float weight[5];
+                
+                varying vec2 textureCoordinate;
+                
+                varying vec2 textureCoordinateBlur1;
+                varying vec2 textureCoordinateBlur2;
+                varying vec2 textureCoordinateBlur3;
+                varying vec2 textureCoordinateBlur4;
+                varying vec2 textureCoordinateBlur5;
+                varying vec2 textureCoordinateBlur6;
+                varying vec2 textureCoordinateBlur7;
+                varying vec2 textureCoordinateBlur8;
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame2, textureCoordinate);
+                pixelColor = pixelColor * weight[0];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur1) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur2) * weight[2];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur3) * weight[3];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur4) * weight[4]; 
+                
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur5) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur6) * weight[2];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur7) * weight[3];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur8) * weight[4];  
+                
+                gl_FragColor =  pixelColor/0.998654907;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">1</element>
+            <element variableName="fd_blur_orientation">1.0,0.0</element>
+            <element variableName="offset">1.4474603, 3.3793784, 5.3157360, 7.2583260</element>
+            <element variableName="weight">0.1496034,0.2523722,0.1280228,0.0376972,0.0064335</element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+
+    
+    <filter name="blur4">
+        <vsh>
+            <![CDATA[
+                attribute vec4 position;
+                attribute mediump vec4 inputTextureCoordinate;
+                varying mediump vec2 textureCoordinate;
+                
+                varying mediump vec2 textureCoordinateBlur1;
+                varying mediump vec2 textureCoordinateBlur2;
+                varying mediump vec2 textureCoordinateBlur3;
+                varying mediump vec2 textureCoordinateBlur4;
+ 				uniform mediump vec2  fd_blur_orientation; 
+                uniform mediump float stepwidth;
+                uniform mediump float stepheight;
+                uniform mediump float offset[2];
+                void main()
+                {
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                
+                mediump vec2 step = vec2(stepwidth,stepheight);
+                step = fd_blur_orientation * step;
+                textureCoordinateBlur1 = textureCoordinate + step*offset[0];
+                textureCoordinateBlur2 = textureCoordinate + step*offset[1];
+                
+                textureCoordinateBlur3 = textureCoordinate - step*offset[0];
+                textureCoordinateBlur4 = textureCoordinate - step*offset[1];
+                
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision mediump float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame2;
+                uniform float weight[3];
+                
+                varying mediump vec2 textureCoordinate;
+                
+                varying mediump vec2 textureCoordinateBlur1;
+                varying mediump vec2 textureCoordinateBlur2;
+                varying mediump vec2 textureCoordinateBlur3;
+                varying mediump vec2 textureCoordinateBlur4;
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame2, textureCoordinate);
+                pixelColor = pixelColor * weight[0];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur1) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur2) * weight[2];
+                
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur3) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur4) * weight[2]; 
+                
+                gl_FragColor =  pixelColor/0.99960886;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">1</element>
+            <element variableName="fd_blur_orientation">1.0,0.0</element>
+            <element variableName="offset">1.2916107, 3.1119470</element>
+            <element variableName="weight">0.3068787,0.3222591,0.0241058</element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    <filter name="blur8">
+        <vsh>
+            <![CDATA[
+                attribute vec4 position;
+                attribute mediump vec4 inputTextureCoordinate;
+                varying mediump vec2 textureCoordinate;
+                
+                varying mediump vec2 textureCoordinateBlur1;
+                varying mediump vec2 textureCoordinateBlur2;
+                varying mediump vec2 textureCoordinateBlur3;
+                varying mediump vec2 textureCoordinateBlur4;
+                varying mediump vec2 textureCoordinateBlur5;
+                varying mediump vec2 textureCoordinateBlur6;
+                varying mediump vec2 textureCoordinateBlur7;
+                varying mediump vec2 textureCoordinateBlur8;
+ 				uniform mediump vec2  fd_blur_orientation; 
+                uniform mediump float stepwidth;
+                uniform mediump float stepheight;
+                uniform mediump float offset[4];
+                void main()
+                {
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                
+                mediump vec2 step = vec2(stepwidth,stepheight);
+                step = fd_blur_orientation * step;
+                textureCoordinateBlur1 = textureCoordinate + step*offset[0];
+                textureCoordinateBlur2 = textureCoordinate + step*offset[1];
+                textureCoordinateBlur3 = textureCoordinate + step*offset[2];
+                textureCoordinateBlur4 = textureCoordinate + step*offset[3];
+                
+                textureCoordinateBlur5 = textureCoordinate - step*offset[0];
+                textureCoordinateBlur6 = textureCoordinate - step*offset[1];
+                textureCoordinateBlur7 = textureCoordinate - step*offset[2];
+                textureCoordinateBlur8 = textureCoordinate - step*offset[3];
+                
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision lowp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame2;
+                uniform float weight[5];
+                
+                varying mediump vec2 textureCoordinate;
+                
+                varying mediump vec2 textureCoordinateBlur1;
+                varying mediump vec2 textureCoordinateBlur2;
+                varying mediump vec2 textureCoordinateBlur3;
+                varying mediump vec2 textureCoordinateBlur4;
+                varying mediump vec2 textureCoordinateBlur5;
+                varying mediump vec2 textureCoordinateBlur6;
+                varying mediump vec2 textureCoordinateBlur7;
+                varying mediump vec2 textureCoordinateBlur8;
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame2, textureCoordinate);
+                pixelColor = pixelColor * weight[0];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur1) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur2) * weight[2];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur3) * weight[3];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur4) * weight[4]; 
+                
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur5) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur6) * weight[2];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur7) * weight[3];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur8) * weight[4];  
+                
+                gl_FragColor =  pixelColor/0.998654907;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">1</element>
+            <element variableName="fd_blur_orientation">1.0,0.0</element>
+            <element variableName="offset">1.4474603, 3.3793784, 5.3157360, 7.2583260</element>
+            <element variableName="weight">0.1496034,0.2523722,0.1280228,0.0376972,0.0064335</element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    
+    <filter name="blur12">
+        <vsh>
+            <![CDATA[
+                attribute vec4 position;
+                attribute highp vec4 inputTextureCoordinate;
+                varying highp vec2 textureCoordinate;
+                
+                varying mediump vec2 textureCoordinateBlur1;
+                varying mediump vec2 textureCoordinateBlur2;
+                varying mediump vec2 textureCoordinateBlur3;
+                varying mediump vec2 textureCoordinateBlur4;
+                varying mediump vec2 textureCoordinateBlur5;
+                varying mediump vec2 textureCoordinateBlur6;
+                varying mediump vec2 textureCoordinateBlur7;
+                varying mediump vec2 textureCoordinateBlur8;
+                varying mediump vec2 textureCoordinateBlur9;
+                varying mediump vec2 textureCoordinateBlur10;
+                varying mediump vec2 textureCoordinateBlur11;
+                varying mediump vec2 textureCoordinateBlur12;
+ 				uniform mediump vec2  fd_blur_orientation; 
+                uniform mediump float stepwidth;
+                uniform mediump float stepheight;
+                uniform mediump float offset[6];
+                void main()
+                {
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                
+                mediump vec2 step = vec2(stepwidth,stepheight);
+                step = fd_blur_orientation * step;
+                textureCoordinateBlur1 = textureCoordinate + step*offset[0];
+                textureCoordinateBlur2 = textureCoordinate + step*offset[1];
+                textureCoordinateBlur3 = textureCoordinate + step*offset[2];
+                textureCoordinateBlur4 = textureCoordinate + step*offset[3];
+                textureCoordinateBlur5 = textureCoordinate + step*offset[4];
+                textureCoordinateBlur6 = textureCoordinate + step*offset[5];
+                
+                textureCoordinateBlur7 = textureCoordinate - step*offset[0];
+                textureCoordinateBlur8 = textureCoordinate - step*offset[1];
+                textureCoordinateBlur9 = textureCoordinate - step*offset[2];
+                textureCoordinateBlur10 = textureCoordinate - step*offset[3];
+                textureCoordinateBlur11 = textureCoordinate - step*offset[4];
+                textureCoordinateBlur12 = textureCoordinate - step*offset[5];
+                
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision mediump float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame2;
+                uniform float weight[7];
+                
+                varying mediump vec2 textureCoordinate;
+                
+                varying mediump vec2 textureCoordinateBlur1;
+                varying mediump vec2 textureCoordinateBlur2;
+                varying mediump vec2 textureCoordinateBlur3;
+                varying mediump vec2 textureCoordinateBlur4;
+                varying mediump vec2 textureCoordinateBlur5;
+                varying mediump vec2 textureCoordinateBlur6;
+                varying mediump vec2 textureCoordinateBlur7;
+                varying mediump vec2 textureCoordinateBlur8;
+                varying mediump vec2 textureCoordinateBlur9;
+                varying mediump vec2 textureCoordinateBlur10;
+                varying mediump vec2 textureCoordinateBlur11;
+                varying mediump vec2 textureCoordinateBlur12;
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame2, textureCoordinate);
+                pixelColor = pixelColor * weight[0];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur1) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur2) * weight[2];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur3) * weight[3];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur4) * weight[4]; 
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur5) * weight[5];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur6) * weight[6]; 
+                
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur7) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur8) * weight[2];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur9) * weight[3];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur10) * weight[4]; 
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur11) * weight[5];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur12) * weight[6]; 
+                
+                gl_FragColor =  pixelColor/0.9996610;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">1</element>
+            <element variableName="fd_blur_orientation">1.0,0.0</element>
+            <element variableName="offset">1.4694259, 3.4290534, 5.3896034, 7.3515473, 9.3152883,11.2811478</element>
+            <element variableName="weight">0.1139835,0.2062385,0.1382642,0.0673089,0.0237889,0.0061024,0.0011358</element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    <filter name="blur16">
+        <vsh>
+            <![CDATA[
+                attribute vec4 position;
+                attribute highp vec4 inputTextureCoordinate;
+                varying highp vec2 textureCoordinate;
+                
+ 				uniform mediump vec2  fd_blur_orientation; 
+                uniform mediump float stepwidth;
+                uniform mediump float stepheight;
+                uniform mediump float offset[8];
+                void main()
+                {
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision mediump float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame2;
+                uniform float weight[9];
+                
+                varying mediump vec2 textureCoordinate;
+                
+ 				uniform mediump vec2  fd_blur_orientation; 
+                uniform mediump float stepwidth;
+                uniform mediump float stepheight;
+                uniform mediump float offset[8];
+                void main(void)
+                {
+                mediump vec2 textureCoordinateBlur1;
+                mediump vec2 textureCoordinateBlur2;
+                mediump vec2 textureCoordinateBlur3;
+                mediump vec2 textureCoordinateBlur4;
+                mediump vec2 textureCoordinateBlur5;
+                mediump vec2 textureCoordinateBlur6;
+                mediump vec2 textureCoordinateBlur7;
+                mediump vec2 textureCoordinateBlur8;
+                mediump vec2 textureCoordinateBlur9;
+                mediump vec2 textureCoordinateBlur10;
+                mediump vec2 textureCoordinateBlur11;
+                mediump vec2 textureCoordinateBlur12;
+                mediump vec2 textureCoordinateBlur13;
+                mediump vec2 textureCoordinateBlur14;
+                mediump vec2 textureCoordinateBlur15;
+                mediump vec2 textureCoordinateBlur16;
+                mediump vec2 step = vec2(stepwidth,stepheight);
+                step = fd_blur_orientation * step;
+                textureCoordinateBlur1 = textureCoordinate + step*offset[0];
+                textureCoordinateBlur2 = textureCoordinate + step*offset[1];
+                textureCoordinateBlur3 = textureCoordinate + step*offset[2];
+                textureCoordinateBlur4 = textureCoordinate + step*offset[3];
+                textureCoordinateBlur5 = textureCoordinate + step*offset[4];
+                textureCoordinateBlur6 = textureCoordinate + step*offset[5];
+                textureCoordinateBlur7 = textureCoordinate + step*offset[6];
+                textureCoordinateBlur8 = textureCoordinate + step*offset[7];
+                
+                textureCoordinateBlur9 = textureCoordinate - step*offset[0];
+                textureCoordinateBlur10 = textureCoordinate - step*offset[1];
+                textureCoordinateBlur11 = textureCoordinate - step*offset[2];
+                textureCoordinateBlur12 = textureCoordinate - step*offset[3];
+                textureCoordinateBlur13 = textureCoordinate - step*offset[4];
+                textureCoordinateBlur14 = textureCoordinate - step*offset[5];
+                textureCoordinateBlur15 = textureCoordinate - step*offset[6];
+                textureCoordinateBlur16 = textureCoordinate - step*offset[7];
+                
+                vec4 pixelColor = texture2D(videoFrame2, textureCoordinate);
+                pixelColor = pixelColor * weight[0];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur1) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur2) * weight[2];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur3) * weight[3];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur4) * weight[4]; 
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur5) * weight[5];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur6) * weight[6]; 
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur7) * weight[7];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur8) * weight[8]; 
+                
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur9) * weight[1];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur10) * weight[2];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur11) * weight[3];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur12) * weight[4]; 
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur13) * weight[5];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur14) * weight[6]; 
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur15) * weight[7];
+                pixelColor +=texture2D(videoFrame2, textureCoordinateBlur16) * weight[8];
+                gl_FragColor =  pixelColor/0.998053554;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">1</element>
+            <element variableName="fd_blur_orientation">1.0,0.0</element>
+            <element variableName="offset">1.4868195, 3.4692770,5.4518102, 7.4344613, 9.4172715,11.4002804,13.3835258,15.3670434</element>
+            <element variableName="weight">0.0748017,0.1432211,0.1203197,0.0879282,0.0558958,0.0309090,0.0148675,0.0062207,0.0022640</element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    
+    
+    <filter name="titlpar">
+        <vsh>
+            <![CDATA[
+                attribute vec4 position;
+                attribute lowp vec4 inputTextureCoordinate;
+                varying lowp vec2 textureCoordinate;
+                void main()
+                {
+                
+                gl_Position = position;//*mat4;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision lowp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame;
+                uniform float fd_ratial;
+                uniform highp float fd_tan;
+                uniform float fd_dy1;
+                uniform float fd_dy2;
+                //uniform vec2 fd_center;
+                //uniform float fd_radius;
+                varying highp vec2 textureCoordinate;
+                
+                void main(void)
+                {
+                vec4 pixelColor;// = texture2D(videoFrame, textureCoordinate);
+                highp float standardDY = fd_tan * textureCoordinate.x * fd_ratial;
+                highp float mydy1 = textureCoordinate.y - standardDY - fd_dy1;
+                highp float mydy2 = textureCoordinate.y - standardDY - fd_dy2;
+                highp float blurDis = max(abs(mydy1),abs(mydy2));
+                highp float distance = abs(fd_dy1 - fd_dy2);
+                float blur =0.9;
+                pixelColor =(mydy1*mydy2<0.0?vec4(1.0,1.0,1.0,smoothstep(distance*0.6,distance,blurDis)*blur):vec4(1.0,1.0,1.0,blur));
+                gl_FragColor = pixelColor;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame" vartype="int">
+                0
+            </element>
+            <element variableName="fd_ratial">
+                0.75
+            </element>
+            <element variableName="fd_tan">
+                -0.001
+            </element>
+            <element variableName="fd_dy1">
+                0.8
+            </element>
+            <element variableName="fd_dy2">
+                0.3
+            </element>
+        </uniforms>
+        <steps>
+            <element blend="1"/>
+        </steps>
+    </filter>
+    
+    <filter name="titlparHorizon">
+        <vsh>
+            <![CDATA[
+                attribute vec4 position;
+                attribute highp vec4 inputTextureCoordinate;
+                //uniform mat4 rotate;
+                varying highp vec2 textureCoordinate;
+                //varying highp vec2 blur_radius;
+                void main()
+                {
+                
+                gl_Position = position;//*mat4;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision highp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame;
+                uniform float fd_ratial;
+                uniform float fd_tan;
+                uniform float fd_dx1;
+                uniform float fd_dx2;
+                varying highp vec2 textureCoordinate;
+                
+                void main(void)
+                {
+                vec4 pixelColor;// = texture2D(videoFrame, textureCoordinate);
+                float standardDX = fd_tan * textureCoordinate.y * fd_ratial;
+                float mydx1 = textureCoordinate.x - standardDX - fd_dx1;
+                float mydx2 = textureCoordinate.x - standardDX - fd_dx2;
+                float blurDis = max(abs(mydx1),abs(mydx2));
+                float distance = abs(fd_dx1 - fd_dx2);
+                float blur =0.9;
+                pixelColor =(mydx1*mydx2<0.0?vec4(1.0,1.0,1.0,smoothstep(distance*0.6,distance,blurDis)*blur):vec4(1.0,1.0,1.0,blur));
+                gl_FragColor = pixelColor;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame" vartype="int">
+                0
+            </element>
+            <element variableName="fd_ratial">
+                1.333
+            </element>
+            <element variableName="fd_tan">
+                -0.001
+            </element>
+            <element variableName="fd_dx1">
+                0.8
+            </element>
+            <element variableName="fd_dx2">
+                0.3
+            </element>
+        </uniforms>
+        <steps>
+            <element blend="1"/>
+        </steps>
+    </filter>
+    
+    <filter name="titlparmerge">
+        <vsh>
+            <![CDATA[
+                attribute vec4 position;
+                attribute highp vec4 inputTextureCoordinate;
+                varying highp vec2 textureCoordinate;
+                
+                void main()
+                {
+                
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision highp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame;
+                uniform sampler2D videoFrame2;
+                uniform float fd_degree;
+                
+                uniform float fd_ratial;
+                uniform float fd_tan;
+                uniform float fd_dy1;
+                uniform float fd_dy2;
+                varying highp vec2 textureCoordinate;
+                
+                
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame, textureCoordinate);
+                vec4 pixelColor2 = texture2D(videoFrame2, textureCoordinate);
+                
+                float standardDY = fd_tan * textureCoordinate.x * fd_ratial;
+                float mydy1 = textureCoordinate.y - standardDY - fd_dy1;
+                float mydy2 = textureCoordinate.y - standardDY - fd_dy2;
+                float blurDis = max(abs(mydy1),abs(mydy2));
+                float distance = abs(fd_dy1 - fd_dy2);
+                float blur = 1.0;    
+                float alpha =(mydy1*mydy2<0.0?smoothstep(distance*0.6,distance,blurDis)*blur:blur);
+                vec4 result = (1.0-alpha) * pixelColor + alpha * pixelColor2;
+                pixelColor = CLAMP_COLOR(vec4(result.rgb, 1.0));
+                
+                gl_FragColor = pixelColor;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">
+                1
+            </element>
+            <element variableName="videoFrame" vartype="int">
+                0
+            </element>
+            <element variableName="fd_ratial">
+                0.75
+            </element>
+            <element variableName="fd_tan">
+                -0.001
+            </element>
+            <element variableName="fd_dy1">
+                0.8
+            </element>
+            <element variableName="fd_dy2">
+                0.3
+            </element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    
+    
+    <filter name="titlparHorizonmerge">
+        <vsh>
+            <![CDATA[
+                attribute vec4 position;
+                attribute highp vec4 inputTextureCoordinate;
+                varying highp vec2 textureCoordinate;
+                
+                void main()
+                {
+                
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision highp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                
+                uniform sampler2D videoFrame;
+                uniform sampler2D videoFrame2;
+                uniform float fd_degree;
+                
+                uniform float fd_ratial;
+                uniform float fd_tan;
+                uniform float fd_dx1;
+                uniform float fd_dx2;
+                varying highp vec2 textureCoordinate;
+                
+                
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame, textureCoordinate);
+                vec4 pixelColor2 = texture2D(videoFrame2, textureCoordinate);
+                
+                float standardDX = fd_tan * textureCoordinate.y * fd_ratial;
+                float mydx1 = textureCoordinate.x - standardDX - fd_dx1;
+                float mydx2 = textureCoordinate.x - standardDX - fd_dx2;
+                float blurDis = max(abs(mydx1),abs(mydx2));
+                float distance = abs(fd_dx1 - fd_dx2);
+                
+                float blur = 1.0;    
+                float alpha =(mydx1*mydx2<0.0?smoothstep(distance*0.6,distance,blurDis)*blur:blur);
+                vec4 result = (1.0-alpha) * pixelColor + alpha * pixelColor2;
+                pixelColor = CLAMP_COLOR(vec4(result.rgb, 1.0));
+                
+                gl_FragColor = pixelColor;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame2" vartype="int">
+                1
+            </element>
+            <element variableName="videoFrame" vartype="int">
+                0
+            </element>
+            <element variableName="fd_ratial">
+                0.75
+            </element>
+            <element variableName="fd_tan">
+                -0.001
+            </element>
+            <element variableName="fd_dx1">
+                0.8
+            </element>
+            <element variableName="fd_dx2">
+                0.3
+            </element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    
+    
+    <filter name="swizzle">
+        <vsh>
+            <![CDATA[
+                attribute vec4 position;
+                attribute lowp vec4 inputTextureCoordinate;
+                varying lowp vec2 textureCoordinate;
+                
+                void main()
+                {
+                
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision lowp float;
+                uniform sampler2D videoFrame;
+                varying lowp vec2 textureCoordinate;
+                
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame, textureCoordinate);
+                gl_FragColor = vec4(pixelColor.a,pixelColor.rgb);
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame" vartype="int">
+                0
+            </element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    <filter name="swizzleIOS5">
+        <vsh>
+            <![CDATA[
+                attribute lowp vec4 position;
+                attribute lowp vec4 inputTextureCoordinate;
+                varying lowp vec2 textureCoordinate;
+                
+                void main()
+                {
+                
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                uniform sampler2D videoFrame;
+                varying lowp vec2 textureCoordinate;
+                
+                void main(void)
+                {
+                    lowp vec4 pixelColor = texture2D(videoFrame, textureCoordinate);
+                gl_FragColor = vec4(pixelColor.rgb.b,pixelColor.rgb.g,pixelColor.rgb.r,pixelColor.a);
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame" vartype="int">
+                0
+            </element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+
+    
+    <filter name="brightsatcontrast">
+        <vsh>
+            <![CDATA[
+                precision lowp float;
+                attribute vec4 position;
+                attribute vec4 inputTextureCoordinate;
+                varying vec2 textureCoordinate;
+                
+                void main()
+                {
+                
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                precision lowp float;
+                #define CLAMP_COLOR(color) clamp(color, 0.0, 1.0)
+                /*
+                ** Contrast, saturation, brightness
+                ** Code of this function is from TGM's shader pack
+                ** http://irrlicht.sourceforge.net/phpBB2/viewtopic.php?t=21057
+                */
+                
+                // For all settings: 1.0 = 100% 0.5=50% 1.5 = 150%
+                vec3 ContrastSaturationBrightness(vec3 color, float brt, float sat, float con)
+                {
+                // Increase or decrease theese values to adjust r, g and b color channels seperately
+                const float AvgLumR = 0.5;
+                const float AvgLumG = 0.5;
+                const float AvgLumB = 0.5;
+                
+                const vec3 LumCoeff = vec3(0.2125, 0.7154, 0.0721);
+                
+                vec3 AvgLumin = vec3(AvgLumR, AvgLumG, AvgLumB);
+                mediump vec3 brtColor = color * brt;
+                mediump vec3 intensity = vec3(dot(brtColor, LumCoeff));
+                mediump vec3 satColor = mix(intensity, brtColor, sat);
+                vec3 conColor = CLAMP_COLOR(mix(AvgLumin, satColor, con));
+                return conColor;
+                }
+                uniform sampler2D videoFrame;
+                uniform mediump float fd_bright;
+                uniform mediump float fd_sat;
+                uniform mediump float fd_contrast;
+                
+                varying vec2 textureCoordinate;
+                
+                void main(void)
+                {
+                vec4 pixelColor = texture2D(videoFrame, textureCoordinate);
+                
+                pixelColor = vec4(ContrastSaturationBrightness(pixelColor.rgb, fd_bright,fd_sat,fd_contrast),pixelColor.a);
+                gl_FragColor = pixelColor;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame" vartype="int">
+                1
+            </element>
+            <element variableName="fd_bright">
+                1.0
+            </element>
+            <element variableName="fd_sat">
+                1.0
+            </element>
+            <element variableName="fd_contrast">
+                1.0
+            </element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    
+    <filter name="border">
+        <vsh>
+            <![CDATA[
+                attribute lowp vec4 position;
+                attribute lowp vec4 inputTextureCoordinate;
+                varying lowp vec2 textureCoordinate;
+                
+                void main()
+                {
+                
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                uniform sampler2D videoFrame;
+                uniform sampler2D myBorder;
+                varying lowp vec2 textureCoordinate;
+                
+                void main(void)
+                {
+                lowp vec4 pixelColor = texture2D(videoFrame, textureCoordinate);
+                lowp vec4 borderColor =  texture2D(myBorder, textureCoordinate);
+                pixelColor = vec4(mix(pixelColor.rgb,borderColor.rgb,borderColor.a),1.0);
+                gl_FragColor = pixelColor;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame" vartype="int">
+                1
+            </element>
+            <element variableName="myBorder" vartype="int">
+                7
+            </element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+    <filter name="border2">
+        <vsh>
+            <![CDATA[
+                attribute lowp vec4 position;
+                attribute lowp vec4 inputTextureCoordinate;
+                varying mediump vec2 textureCoordinate;
+                
+                void main()
+                {
+                
+                gl_Position = position;
+                textureCoordinate = vec2(inputTextureCoordinate.xy);
+                }
+            ]]>
+        </vsh>
+        <fsh>
+            <![CDATA[
+                uniform sampler2D videoFrame;
+                uniform sampler2D myBorder;
+                varying mediump vec2 textureCoordinate;
+                
+                void main(void)
+                {
+                lowp vec4 pixelColor = texture2D(videoFrame, textureCoordinate);
+                lowp vec4 borderColor =  texture2D(myBorder, vec2(textureCoordinate.y, textureCoordinate.x));
+                pixelColor = vec4(mix(pixelColor.rgb,borderColor.rgb,borderColor.a),1.0);
+                gl_FragColor = pixelColor;
+                }
+            ]]>
+        </fsh>
+        <uniforms>
+            <element variableName="videoFrame" vartype="int">
+                1
+            </element>
+            <element variableName="myBorder" vartype="int">
+                7
+            </element>
+        </uniforms>
+        <steps>
+            <element/>
+        </steps>
+    </filter>
+</root>

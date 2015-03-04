@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Flogger</title>
+		<link rel="stylesheet"  href="profile.css"/>
+		<script src="jquery-1.7.1.min.js" ></script>
+		<script src="jquery.util.js" ></script>
+		<script>
+			var actionUrl = "myapp://doAction/profile/?",
+				userUID = 0,
+				lblBtnFollow="Follow",
+				lblBtnUnFollow="Unfollow";
+			
+			$(function(){
+				//click  event
+				$("#btn_follow, #photo, #following, #followers, #gallery").click(function(){
+					var actionType = $(this).attr("actionType");
+					
+					//follow button 
+					if($(this).is("#btn_follow")){
+						if($(this).is(".followed")){//unfollow
+							$(this).attr("actionType", "follow").removeClass("followed").text(lblBtnFollow);
+							$("#follow-text").show();
+							$("#following-text").hide();
+						}else{ //follow
+							$(this).attr("actionType", "unfollow").addClass("followed").text(lblBtnUnFollow);
+							$("#follow-text").hide();
+							$("#following-text").show();
+						}
+					}
+					var postData={
+						cmd: actionType, //gallery, biography, follow, unfollow, following, followers, photo
+						userUID: userUID
+					};
+					
+					execAction(postData);
+				});
+				$("#follow-text").hide();
+				$("#following-text").show();
+			});
+			
+			function execAction(postData){
+				window.location.href = actionUrl + $.json2string(postData);
+			};
+			
+			function fillData(data){
+				userUID = data.useruid;
+				
+				$("[fill-data]").each(function(){
+					var key = $(this).attr("fill-data");
+					if(key){
+						$(this).html((data[key]===undefined || data[key] ==null) ? "&nbsp;" : data[key]);
+					}
+				});
+				lblBtnFollow = data.lblBtnFollow || lblBtnFollow;
+				lblBtnUnFollow = data.lblBtnUnFollow || lblBtnUnFollow;
+				if(data.isOwn || !data.islogin){ //是自己的时候
+					$("#follow").hide();
+				}else{
+					//是否follow过
+					if(data.followed){
+						$("#btn_follow").addClass("followed").attr("actionType", "unfollow").text(lblBtnUnFollow);
+						$("#follow-text").hide();
+						$("#following-text").show();
+					}else{
+						$("#btn_follow").removeClass("followed").attr("actionType", "follow").text(lblBtnFollow);
+						$("#follow-text").show();
+						$("#following-text").hide();
+					}
+				}
+				
+				$("#photo").addClass("image-loading");
+			};
+			//设置头像
+			function setPhoto(url) {
+				$("#photo").css({"background": "url("+url+") no-repeat", "background-size": "cover" });
+			};
+			function clearData(){
+				$("[fill-data]").each(function(){
+					var key = $(this).attr("fill-data");
+					if(key){
+						$(this).html("");
+					}
+				});
+				
+				//$("#profile").removeClass("self-profile").removeClass("followed");
+				$("#photo").css({"background": ""});
+			};
+			
+			function hostCallBack(data){
+				
+			};
+		</script>
+	</head>
+	
+	<body>
+		<div id="profileContent">
+			<div id="prolfile-top">
+				<div id="photo" actionType="photo"></div>
+				<div id="username" fill-data="profileName">Flogger</div>
+				<div id="followers" class="follows" actionType="followers">
+					<div class="number" fill-data="followerscount">1</div>
+					<div class="followType" fill-data="lblFollowersCount">Followers</div>
+				</div>
+				<div id="following" class="follows" actionType="following">
+					<div class="number" fill-data="friendscount">2</div>
+					<div class="followType" fill-data="lblFollowingCount">Following</div>
+				</div>
+                <div id="gallery" class="follows" actionType="gallery">
+					<div class="number" fill-data="gallerycount">21</div>
+					<div class="followType" fill-data="lblGalleryCount">Gallery</div>
+				</div>
+			</div>
+          
+           <div id="follow">
+				<div style="height:5px; width:100%;"></div>
+                <div id="isFollow">
+                    <span id="follow-text" fill-data="lblNotFollowing">You are not following</span>
+                    <span id="following-text" fill-data="lblFollowing">You are following</span> 
+                    <span fill-data="profileName">Flogger</span>
+                </div>
+                <div id="btn_follow" class="follow diy-button">Follow</div>
+                <div style="clear:both"></div>
+            </div>
+		</div>
+       
+        <div style="width:100%;height:1px;background:#403f3e">&nbsp;</div>
+	</body>
+</html>

@@ -1,0 +1,95 @@
+<css>
+    <element name="main">
+        <width>320</width>
+    </element>
+    <element name="mainboard">
+        <width>300</width>
+        <x>10</x>
+    </element>
+    <element name="photoSubContainer">
+        <y>auto 5</y>
+        <miny>50</miny>
+        <backgroundColor>#ffffff</backgroundColor>
+        <effect>
+            shadow #979797 0 1 1 
+        </effect>
+    </element>
+    <element name="photo">
+		<y>2</y>
+        <x>2</x>
+        <backgroundColor>#3d434b</backgroundColor>
+    </element>
+    <element name="videoPlay">
+        <position>center</position>
+    </element>
+    <element name="dataFoot">
+        <y>10</y>
+        <width>300</width>
+        <height>50</height>
+    </element>
+
+    <element name="profileImage">
+        <height>40</height>
+        <width>40</width>
+        <y>-5</y>
+    </element>
+    <!--element name ="dataRight">
+        <x>50</x>
+        <width>250</width>
+    </element-->
+    <!--element name="time">
+        <x>200</x>
+        <y>8</y>
+        <width>50</width>
+        <height>20</height>
+        <sysfont>11</sysfont>
+		<color>#979797</color>
+        <textAlignment>right</textAlignment>
+    </element-->  
+    <element name="descContainer">
+        <x>50</x>
+        <y>center -5</y>     
+    </element>
+    <element name="groupContainer">
+    </element>
+    <element name="desc">
+        <width>220</width>
+        <sysfont>14</sysfont>
+		<color>#403f3e</color>
+    </element>
+    <element name="time">
+         <y>auto</y>
+        <width>150</width>
+        <height>20</height>
+        <sysfont>11</sysfont>
+		<color>#979797</color>
+    </element>  
+    <element name="atSomebodyBtn">
+     <x>282</x>
+     <y>center -8</y>  
+        <width>20</width>
+        <height>21</height>
+     </element>  
+    <!--element name="location">
+        <y>auto</y>
+    </element>
+    <element name="locationIcon">
+        <width>11</width>        
+        <height>14</height>
+        <y>2</y>
+    </element>
+    <element name="origin">
+        <x>15</x>
+        <y>2</y>
+        <width>230</width>
+        <color>#979797</color>
+		<sysfont>12</sysfont>
+        <userEnable>0</userEnable>
+    </element-->
+  
+    <element name="bottomLine">
+        <y>auto</y>
+        <width>320</width>
+    </element>
+
+</css>

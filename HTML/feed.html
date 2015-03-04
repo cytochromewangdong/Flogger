@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Flogger</title>
+		<link rel="stylesheet"  href="feed.css"/>
+		<script src="jquery-1.7.1.min.js" ></script>
+		<script src="jquery.util.js" ></script>
+		<script>
+			var actionUrl = "myapp://doAction/feed/?",
+				issueId = 0, //当前帖子ID
+				userUID = 0; //发帖人的ID
+			// default width and height for photo
+			var defaultWidth = 300, defaultHeight = 400;
+			$(function(){
+				// click action button  
+				$("#btn_like:not(.liked), #btn_comment, #btn_report, #btn_share, #profileImage, #username, #photo, #videoPlay").click(function(){
+					var actionType=$(this).attr("actionType");
+					// like button 
+					if($(this).is(".like")){
+						if(!$(this).is(".liked")){ // like
+							$(this).addClass("liked").attr("actionType", "unlike");
+							$(".text", $(this)).text($(".text", $(this)).text()*1+1);
+						}else{ // unlike 
+							$(this).removeClass("liked").attr("actionType", "like");
+							$(".text", $(this)).text($(".text", $(this)).text()*1-1);
+						}
+					}
+					if(issueId){
+						var postData={
+							cmd: actionType, // cmd: like/unlike/comment/report/share/profile/photo/playVideo
+							issueId: issueId,
+							userUID: userUID
+						};
+						window.location.href = actionUrl + $.json2string(postData);
+					}
+				});
+				
+				setVideoImage("1.jpg");
+			});
+			
+			function fillData(data){
+				issueId = data.id;
+				userUID = data.useruid;
+				//填充数据
+				$("[fill-data]").each(function(){
+					var key = $(this).attr("fill-data");
+					if(key){
+						$(this).html((data[key]===undefined || data[key] ==null) ? "&nbsp;" : data[key]);
+					}
+				});
+				//是否喜欢过
+				if(data.liked)
+					$("#btn_like").addClass("liked").attr("actionType", "unlike");
+				else
+					$("#btn_like").removeClass("liked").attr("actionType", "like");
+				
+				//是否可以删除
+				if(data.mode == 1){
+					$("#btn_delete").css("display", "block");
+					$("#btn_report").css("display", "none");
+				}else{
+					$("#btn_delete").css("display", "none");
+					$("#btn_report").css("display", "block");
+				}
+				//发帖人头像
+				$("#profileImage").addClass("image-loading");
+				var w = data.middleWidth  || defaultWidth;
+				var h = data.middleHeight || defaultHeight;
+				var w1 = w>defaultWidth ? defaultWidth : w;
+				var h1 = h * w1 / w;
+				switch(data.issuecategory){
+					case 1: //照片
+						$("#photo").css({
+							"width": w1 + "px", 
+							"height": h1 + "px",
+							"display": "block"});
+						$("#video").css("display","none");
+						$("#photo").addClass("image-loading");
+						break;
+					case 2: //视频
+						$("#video").css({
+							"display":"block",
+							"width": w1+"px",
+							"height": h1+"px",
+						});
+						$("#photo").css("display","none");
+						$("#videoPlay").css({"top": ((h1-62)/2) + "px", "left": ((w1-62)/2) + "px"});
+						break;
+					default: //weibo
+						$("#video").css("display","none");
+						$("#photo").css("display","none");
+						break;
+				}
+			};
+			function setMainImage(url)
+			{
+				$("#photo").removeClass("image-loading");
+				$("#photo").css({"background": "url("+url+") no-repeat", "background-size": "cover" });
+			}
+			function setProfileImage(url)
+			{
+				$("#profileImage").css({"background": "url("+url+") no-repeat", "background-size": "cover" });
+			}
+			function setVideoImage(url){
+				$("#video").css({"background": "url("+url+") no-repeat", "background-size": "cover" });
+			};
+			function clearData(){
+				$("[fill-data]").each(function(){
+					var key = $(this).attr("fill-data");
+					if(key){
+						$(this).html("");
+					}
+				});
+				$("#photo, #video").css({
+					"display": "none",
+					"background": "",
+					"background-size": "16px 16px"
+				});
+				$("#profileImage").css({
+					"background": "",
+					"background-size": "16px 16px"
+				});
+			};
+		
+			function hostCallBack(data){
+				
+			};
+			function getHeight(){
+				return $("body").outerHeight()+2;
+			};
+		</script>
+	</head>
+	
+	<body>
+        <div style="height:10px;width:100%;">&nbsp;</div>
+        <div id="photo" actionType="photo">
+            
+        </div>
+        <div id="video">
+            <div id="videoImage">
+                <div id="videoPlay" actionType="playVideo">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="data-foot" >
+            <div class="datainfo">
+                <div id="profileImage" actionType="profile">
+                    
+                </div>
+                <div class="description">
+                    <div>
+                        <div id="username" fill-data="username" actionType="profile"></div>
+                        <div class="time"><span fill-data="time"></span></div>
+                        <div style="clear:both"></div>
+                    </div>
+                    <div class="desc" fill-data="hypertext"></div>
+                    
+                    <div class="origin" fill-data="location"></div>
+                </div>
+                <div style="clear:both"></div>
+                
+                <div class="foot-bar">
+                    <div class="container">
+                        <div id="btn_like" class="like" actionType="like">
+                            <div class="text" fill-data="likecnt">0</div>
+                        </div>
+                        <div id="btn_comment" actionType="comment">
+                            <div class="text" fill-data="commentcnt">0</div>
+                        </div>
+                        <div id="btn_report" actionType="report"></div>
+                        <div id="btn_delete" actionType="delete" style="display: none"></div>
+                        <div id="btn_share" actionType="share">
+                            <div class="text" style="margin-left:0px; text-align:center; width:100%;" >Share</div>
+                        </div>
+                    </div> 
+                </div>
+       	 </div>
+        </div>
+        <div class="line"></div>
+	</body>
+</html>

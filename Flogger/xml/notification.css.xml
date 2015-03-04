@@ -1,0 +1,91 @@
+<css>
+    <element name="main">
+        <width>320</width>
+    </element>
+    <element name="mainboard">
+        <width>300</width>
+        <x>10</x>
+        <vMargin>0</vMargin>
+    </element>
+    <element name="topContainer">
+    </element>
+    <element name="leftCon">
+        <y>10</y>
+        <height>44</height>
+    </element>
+    <element name="profileImageContainer">
+        <y>10</y>
+        <width>44</width>
+        <height>44</height>
+        <effect>
+            radius 5
+        </effect>
+        <backgroundColor>#ffffff</backgroundColor>
+    </element>
+    <element name="blockForAction">
+    </element>
+    <element name="profileImage">
+        <height>40</height>
+        <width>40</width>
+        <x>2</x>
+        <y>2</y>
+        <effect>
+            radius 5
+        </effect>
+    </element>
+    <element name="desc">
+        <y>center</y>
+		<x>50</x>
+        <width>200</width>
+    </element>
+    <element name="desc2">
+        <y>7</y>
+		<x>10</x>
+        <width>230</width>
+    </element>
+	<element name="textContainer">
+        <x>50</x>
+		<y>auto 5</y>
+		<width>230</width>
+        <filter>
+            shadow #979797 0 0.5 1 3 #ffffff
+        </filter>
+	</element>
+    <element name="textTopNone">
+        <width>220</width>
+        <height>7</height>
+        <y>auto</y>
+    </element>
+    <element name="time">
+        <y>center 2</y>
+		<x>255</x>
+        <width>40</width>
+        <height>20</height>
+        <sysfont>11</sysfont>
+		<color>#979797</color>
+        <textAlignment>right</textAlignment>
+    </element>
+    <element name="picsContainer">
+        <y>auto 5</y>
+        <x>48</x>
+        <width>242</width>
+    </element>
+    <element name="descContainer">
+        <width>242</width>
+    </element>
+    <element name="bottomLine">
+        <y>auto 10</y>
+        <width>320</width>
+        <x>0</x>
+        <height>1</height>
+		<backgroundColor>#b9b8b2</backgroundColor>
+    </element>
+    <element name="bottomLinedown">
+        <y>auto</y>
+        <width>320</width>
+        <x>0</x>
+        <height>1</height>
+		<backgroundColor>#ffffff</backgroundColor>
+    </element>
+    
+</css>

@@ -1,0 +1,25 @@
+<body>
+    <div id="mainboard">
+        <div id="dataFoot" >
+  
+                <div x-type="img" id="profileImage" placeholder="sns_Placeholder_Profile_Picture.png" actionType="profile" />
+            
+            <!--div id="dataRight"-->
+                <div id="descContainer">
+                    <div id="groupContainer">
+                        <div x-type="html" id="desc" actionType="link" fill-data="decoratedHypertext"/>
+                    </div>
+                    <div id="photoSubContainer" x-type="img">
+                        <div x-type="img"  placeholder="sns_Placeholder_Photo.png" id="photo" actionType="photoComment">
+                            <div x-type="img" id="videoPlay" src="sns_Play.png" actionType="playVideoComment"/>
+                        </div>
+                    </div>
+                    <div id="time" fill-data="time" />
+                </div>
+                <div id="atSomebodyBtn" x-type="img" src="sns_Com_Comment_Reply.png" actionType="atSomebody"/>
+            <!--/div-->
+        </div> 
+        
+    </div>
+    <div id="bottomLine" x-type="img" src="sns_Bubble_Line.png"/>
+</body>

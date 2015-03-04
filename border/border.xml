@@ -1,0 +1,18 @@
+<root>
+    <filter name="normal" title="No border"  borderImageName="normal.png" iconName="sns_Border_Normal.png"/>
+    <filter title="Elegant"  borderImageName="Elegant.png" iconName="sns_Border_Elegant.png"/>
+    <filter title="Poster"  borderImageName="Poster.png" iconName="sns_Border_Poster.png"/>
+    <filter title="Bound"  borderImageName="Bound.png" iconName="sns_Border_Bound.png"/>
+    <filter title="Slim"  borderImageName="Slim.png" iconName="sns_Border_Slim.png"/>
+    <filter title="Vignette"  borderImageName="Vignette.png" iconName="sns_Border_Vignette.png"/>
+    <filter title="Spatter"  borderImageName="Spatter.png" iconName="sns_Border_Spatter.png"/>
+    <filter title="Plain"  borderImageName="Plain.png" iconName="sns_Border_Plain.png"/>
+    <filter title="Blur"  borderImageName="Blur.png" iconName="sns_Border_Blur.png"/>
+    <filter title="Glow"  borderImageName="Glow.png" iconName="sns_Border_Glow.png"/>
+    <filter title="Grunge"  borderImageName="Grunge.png" iconName="sns_Border_Grunge.png"/>
+    <filter title="Film strip"  borderImageName="Film Strip.png" iconName="sns_Border_Filmstrip.png"/>
+    <filter title="Stone"  borderImageName="Stone.png" iconName="sns_Border_Stone.png"/>
+    <filter title="Sheet film"  borderImageName="Sheet Film.png" iconName="sns_Border_Sheetfilm.png"/>
+    <filter title="Vintage"  borderImageName="Vintage.png" iconName="sns_Border_Vintage.png"/>
+    <filter title="Record"  borderImageName="Recording.png" iconName="sns_Border_Recording.png"/>
+</root>

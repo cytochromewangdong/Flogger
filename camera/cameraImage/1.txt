@@ -1,0 +1,64 @@
+.//BottomView/Camera Bar@2x.png
+.//BottomView/Camera_Icon_Background_Bar@2x.png
+.//BottomView/Camera_Shoot_Button@2x.png
+.//BottomView/Camera_Shoot_Icon@2x.png
+.//BottomView/confirm/Camera_Bar_Confirm@2x.png
+.//BottomView/confirm/Cancel_Confirm@2x.png
+.//BottomView/confirm/Confirm_Portrait@2x.png
+.//BottomView/filter/Filter_Background@2x.png
+.//BottomView/filter/Filter_Icon@2x.png
+.//BottomView/Import_Button@2x.png
+.//BottomView/Photo_Slider_Icon@2x.png
+.//BottomView/Shoot_Background@2x.png
+.//BottomView/Slider_Background@2x.png
+.//BottomView/Slider_Knob@2x.png
+.//BottomView/Video/Feed Follow Photo@2x.png
+.//BottomView/Video/Video_Recording@2x.png
+.//BottomView/Video/Video_Shoot@2x.png
+.//BottomView/Video_Slider_Icon@2x.png
+.//Flash Menu/Flash_Auto@2x.png
+.//Flash Menu/Flash_Auto_Highlight@2x.png
+.//Flash Menu/Flash_Dropdown_Background@2x.png
+.//Flash Menu/Flash_Off@2x.png
+.//Flash Menu/Flash_Off_Highlight@2x.png
+.//Flash Menu/Flash_On@2x.png
+.//Flash Menu/Flash_On_Highlight@2x.png
+.//other/animate1.png
+.//other/animate2.png
+.//other/animate3.png
+.//other/animate4.png
+.//other/drips.png
+.//other/image.png
+.//other/is_camera_iris_background.png
+.//other/is_camera_iris_background@2x.png
+.//other/is_camera_static_iris.png
+.//other/is_camera_static_iris@2x.png
+.//other/menu_line@2x.png
+.//other/menu_off@2x.png
+.//other/menu_off_bottom@2x.png
+.//other/menu_off_top@2x.png
+.//other/menu_on@2x.png
+.//other/menu_on_bottom@2x.png
+.//other/menu_on_top@2x.png
+.//Tilt Shift Menu/Tilt_Dropdown_Background@2x.png
+.//Tilt Shift Menu/Tilt_Linear@2x.png
+.//Tilt Shift Menu/Tilt_Linear_Highlight@2x.png
+.//Tilt Shift Menu/Tilt_Off@2x.png
+.//Tilt Shift Menu/Tilt_Off_Highlight@2x.png
+.//Tilt Shift Menu/Tilt_Radial@2x.png
+.//Tilt Shift Menu/Tilt_Radial_Highlight@2x.png
+.//ToolView/Cancel_Button@2x.png
+.//ToolView/Cancel_Button_Faded@2x.png
+.//ToolView/Face_Camera@2x.png
+.//ToolView/Face_Camera_Faded@2x.png
+.//ToolView/Filter_Button@2x.png
+.//ToolView/Filter_Button_Faded@2x.png
+.//ToolView/Flash_Button@2x.png
+.//ToolView/Flash_Button_Auto@2x.png
+.//ToolView/Flash_Button_Auto_Faded@2x.png
+.//ToolView/Flash_Button_Faded@2x.png
+.//ToolView/Flash_Cancel@2x.png
+.//ToolView/Flash_Cancel_Faded@2x.png
+.//ToolView/Tilt_Shift@2x.png
+.//ToolView/Tilt_Shift_Linear@2x.png
+.//ToolView/Tilt_Shift_Radial@2x.png

@@ -1,0 +1,149 @@
+<css>
+    <element name="main">
+        <width>320</width>
+    </element>
+    <element name="mainboard">
+        <width>320</width>
+    </element>
+	<element name="bodyContainer">
+		<width>320</width>
+        <height>10</height>
+	</element>
+    <element name="profilePhoto">
+		<width>75</width>
+		<height>75</height>
+		<x>7</x>
+		<y>15</y>
+		<effect>
+            radius 3
+        </effect>
+	</element>
+	<element name="username">
+		<x>91</x>
+		<y>16</y>
+		<sysfont>18 bold</sysfont>
+        <color>#ffffff</color>
+	</element>
+	<element name="followers">
+		<x>81</x>
+		<y>42</y>
+		<width>87</width>
+		<height>59</height>
+		<color>#ffffff</color>
+	</element>
+	<element name="followers-number">
+		<y>6</y>
+        <x>3</x>
+        <userEnable>0</userEnable>
+		<width>81</width>
+		<height>30</height>
+		<sysfont>16 bold</sysfont>
+        <color>#ffffff</color>
+        <effect>shadow #151515 0 -0.8</effect>
+        <textAlignment>center</textAlignment>
+	</element>
+	<element name="followers-label">
+        <userEnable>0</userEnable>
+		<width>81</width>
+		<height>30</height>
+		<y>22</y>
+        <x>3</x>
+		<sysfont>10 bold</sysfont>
+        <effect>shadow #151515 0 -0.8</effect>
+        <color>#ffffff</color>
+        <textAlignment>center</textAlignment>
+	</element>
+	<element name="following">
+		<x>157</x>
+		<y>42</y>
+		<width>87</width>
+		<height>59</height>
+		<color>#ffffff</color>
+	</element>
+	<element name="following-number">
+        <userEnable>0</userEnable>
+		<y>6</y>
+        <x>3</x>
+		<width>81</width>
+		<height>30</height>
+        <effect>shadow #151515 0 -0.8</effect>
+		<sysfont>16 bold</sysfont>
+        <color>#ffffff</color>
+        <textAlignment>center</textAlignment>
+	</element>
+	<element name="following-label">
+        <userEnable>0</userEnable>
+		<width>81</width>
+		<height>30</height>
+        <effect>shadow #151515 0 -0.8</effect>
+		<y>22</y>
+        <x>3</x>
+		<sysfont>10 bold</sysfont>
+        <color>#ffffff</color>
+        <textAlignment>center</textAlignment>
+	</element>
+	<element name="gallery">
+		<x>233</x>
+		<y>42</y>
+		<width>87</width>
+		<height>59</height>
+		<color>#ffffff</color>
+	</element>
+	<element name="gallery-number">
+        <userEnable>0</userEnable>
+        <effect>shadow #151515 0 -0.8</effect>
+        <y>6</y>
+        <x>3</x>
+		<width>81</width>
+		<height>30</height>
+		<sysfont>16 bold</sysfont>
+        <color>#ffffff</color>
+        <textAlignment>center</textAlignment>
+	</element>
+	<element name="gallery-label">
+        <userEnable>0</userEnable>
+        <effect>shadow #151515 0 -0.8</effect>
+		<width>81</width>
+		<height>30</height>
+		<y>22</y>
+        <x>3</x>
+		<sysfont>10 bold</sysfont>
+        <color>#ffffff</color>
+        <textAlignment>center</textAlignment>
+	</element>
+	<element name="followContainer">
+		<y>auto</y>
+		<width>320</width>
+	</element>
+	<element name="follow">
+		<x>10</x>
+		<y>15</y>
+		<width>220</width>
+        <color>#ffffff</color>
+		<sysfont>12 bold</sysfont>
+	</element>
+	<element name="follow-btn">
+		<x>235</x>
+		<y>5</y>
+		<width>81</width>
+        <height>39</height>
+	</element>
+	<element name="followBtnLabel">
+        <userEnable>0</userEnable>
+		<x>center</x>
+		<y>center -2</y>
+        <effect>shadow #151515 0 -0.8</effect>
+        <color>#ffffff</color>
+		<sysfont>12 bold</sysfont>
+	</element>
+	<element name="noneDiv">
+		<y>auto</y>
+		<height>6</height>
+		<width>320</width>
+	</element>
+	<element name="bottomLine">
+		<width>320</width>
+		<height>1</height>
+		<backgroundColor>#403f3e</backgroundColor>
+	</element>
+</css>

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<title>Flogger</title>
+		<link rel="stylesheet"  href="biography.css"/>
+		<script src="jquery-1.7.1.min.js" ></script>
+		<script src="jquery.util.js" ></script>
+		<script>
+			var tagTp = "<li class=\"eleTag\"><img src=\"sns_Minus@2x.png\" class=\"delete-tag-btn\"/>"+
+							"<span class=\"white bold tag\">{content}</span></li>";
+			var actionURL =  "myapp://doAction/biography?";
+			var isDoing = false;
+			$(function(){
+				$("#biography, #website").bind("change", function(res){
+					updateDetail();
+				});
+				$("#website").bind("keydown", function(e){
+					if(e.keyCode==13){
+						$(this).blur();
+						e.preventDefault();
+						return ;
+					}
+				});
+				// change delete event
+				$("#delete-tags-btn").click(function(){
+					if(isDoing){
+						e.preventDefault();
+						return ;
+					}
+					if($(this).data("isShow")!=1){
+						$("img", $(this)).css({"-webkit-transform":"rotate(-90deg)"});
+						
+						$(".delete-tag-btn").css({"opacity":"1"});
+						$(this).data("isShow", 1)
+					}else{
+						$("img", $(this)).css({"-webkit-transform":"rotate(0deg)"});
+						$(".delete-tag-btn").css({"opacity":"0"});
+						$(this).data("isShow", 0)
+					}
+				});
+				
+				//Add Tag
+				$("#add-tags-btn").click(function(){
+					if(isDoing){
+						e.preventDefault();
+						return ;
+					}
+					if($("#delete-tags-btn").data("isShow") == 1){
+						$("#delete-tags-btn").trigger("click");
+					}
+					$(tagInputBox).show();
+					tagInput.focus();
+				});
+				//Add tag event
+				$(tagInput).bind("blur",function(){
+					var that=$(this);
+					that.parent().hide();
+					if(!that.val() || !$.trim(that.val()))
+					{
+						return;
+					}
+					var item=$(tagTp.replace("{content}",that.val()));
+					that.val("");
+					$("#taglist").prepend(item);
+					updateDetail();
+				});
+				
+				
+			});
+			
+			function gatherTags()
+			{
+				var ret = [];
+				$(".eleTag").each(function(){
+					ret.push($(this).text());
+				});
+				return ret.join(",");
+			}
+			//填充数据.
+			function fillData(data){
+                $("#biography").attr("placeholder", data.lblPlaceholderBiography);
+                $("#website").attr("placeholder", data.lblPlaceholderWebsite);
+                $("#tagInput").attr("placeholder", data.lblTypeinterest);
+                var bio = data.biography;
+				bio = bio&&bio.replace(new RegExp('\\n','g'),'\n');
+				
+                setTimeout(function(){
+                    $("#biography").val(bio);                           
+                },10)
+
+				$("#website").val(data.website);
+				$("#username").text(data.username);
+				//填充数据
+				$("[fill-data]").each(function(){
+                    var key = $(this).attr("fill-data");
+                    if(key){
+                        $(this).html((data[key]===undefined || data[key] ==null) ? "&nbsp;" : data[key]);
+                    }
+                });
+				//tag list 
+				var tagsArr=data.interest?data.interest.split(","):[];
+				$("#taglist").empty();
+				$(tagsArr).each(
+					function(){
+						if(this){
+							var item=$(tagTp.replace("{content}",this));
+							$("#taglist").append(item);
+						}
+					}
+				);
+				// keep the status
+				if($("#delete-tags-btn").data("isShow")==1){
+					$(".delete-tag-btn").css({"opacity":"1"});
+				}else{
+					$(".delete-tag-btn").css({"opacity":"0"});
+				}
+
+				if(data.isOwn){ //是自己的时候,显示操作按钮
+					$("#add-tags-btn, #delete-tags-btn").show();
+					$("#biography").removeAttr("disabled");
+					$("#website").removeAttr("readonly");
+				}else{
+                    $("#add-tags-btn , #delete-tags-btn").hide();
+					data.biography||$("#biography").hide();
+					data.website||$(".websiteContainer").hide();
+					data.interest||$("#tags-box").hide();
+					//website click event
+					if(data.website)
+						$(".websiteContainer").bind("click", function(){
+							var postData={
+								cmd: "goWebsite",
+								website: data.website
+							};
+							window.location.href=actionURL+$.json2string(postData);
+						});
+				}
+				//下边距,taglist占位
+				$("#taglist").parent().height($("#taglist").height());
+				
+				$(".delete-tag-btn").bind("click", function(){
+					var that=$(this);
+					if($("#delete-tags-btn").data("isShow")==1){
+						//delete tag 
+						$(this).parent().fadeOut(250, function(){
+							setTimeout(function(){
+								that.parent().remove();
+								updateDetail();
+							}, 1);
+						});
+					}else{
+						$(this).parent().click();
+					}
+				});
+				// tag search
+				$(".eleTag").bind("click", function(){
+					if($("#delete-tags-btn").data("isShow") != 1 && $(this).text()){
+						var postData={
+							cmd: "goTag",
+							tagName: $(this).text()||""
+						};
+						window.location.href=actionURL+$.json2string(postData);
+					}
+				});
+			};
+			
+			function updateDetail(){
+				var bio = $("#biography").val();
+				
+				bio=bio.replace(new RegExp('\n','g'),'\\n');
+				
+				var postData={
+					cmd: "update",
+					biography: bio,
+					website: $.trim($("#website").val()) ,
+					interest: gatherTags()||""
+				};
+				disableEvent(true);
+				window.location.href = actionURL+$.json2string(postData);
+			};
+			
+			function hostCallBack(data){
+				fillData(data);
+				disableEvent(false);
+			};
+			
+			function disableEvent(flag){
+				if(flag){
+					$("#biography").attr("disabled", true);
+					$("#website").attr("readonly", "readonly");
+					isDoing = true;
+				}else{
+					$("#biography").removeAttr("disabled");
+					$("#website").removeAttr("readonly");
+					isDoing = false;
+				}
+			}
+		</script>
+	</head> 
+		
+	<body>
+		<div id="content">
+			<div id="content-title">
+				<div class="div-align bold algin" style="font-size:17px;">
+					<span id="username"></span><span xintl-key="biography" fill-data="lblBiography">'s Biography</span>
+				</div>
+			</div>
+			
+			<textarea id="biography" disabled="true" placeholder="Click here to write your biography" xintl-key="writeBiography" xintl-type="placeholder" maxlength="1000"></textarea>
+		<!--
+			<textarea id="website" class="white algin bold" disabled="true" autocapitalize="off"></textarea>
+				-->
+			<div class='websiteContainer'> 
+				<div style="position: relative">
+					<input id="website" type="url" class="white bold" placeholder="Click here to add a website"  xintl-key="writeWebsite" xintl-type="placeholder" autocapitalize="off" autocorrect="off" readonly style="text-align: center; position: absolute; top: -3px;line-height:12px"/>
+				</div>
+			</div>
+			<div id="tags-box" style="margin:25px 0px 5px 10px; width:300px;">
+				<div class="bold " id="interest">
+					<span xintl-key="interest" fill-data="lblInterest">Interests</span>:
+					<img src="sns_Plus@2x.png"  id="add-tags-btn"/>
+					<div id="delete-tags-btn" >
+						<img src="sns_Minus_Line@2x.png" />
+					</div>
+				</div>
+				<div id="tagInputBox" style="margin-top:15px; display:none;">
+					<input type="text" id="tagInput" placeholder="Type interest here"  xintl-key="writeTag" xintl-type="placeholder" maxlength="25"/>
+				</div>
+				<div class="tags">
+					<ul id="taglist">
+					</ul>
+				</div>
+			</div>
+			<div style="height:10px;width:100%;">&nbsp;</div>
+		</div>
+	</body>
+</html>

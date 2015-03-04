@@ -1,0 +1,24 @@
+<body>
+    <div id="mainboard">
+        <div id="topContainer"  x-type="img">
+            <div id="blockForAction">
+                <div id="leftCon">
+                    <div x-type="html" id="desc" pureText="1" actionType="link" fill-data="topHypertext"/>
+                    <div x-type="label" id="time" fill-data="time"  />
+                </div>
+                <div id="profileImageContainer" x-type="img">
+                    <div x-type="btn" id="profileImage" placeholder="sns_Placeholder_Profile_Picture.png"  actionType="profile" />
+                </div>
+                <div id="textContainer" x-type="9patch" actionType="parentImageClickEvent" >
+                    <div x-type="btn" id="descContainer">
+                        <div x-type="html" id="desc2" pureText="1" actionType="parentImageClickEvent" fill-data="text"/>
+                    </div>
+                    <div id="textTopNone"></div>
+                </div>
+            </div>
+        </div>
+        <div x-type="scroll" id="picsContainer" />
+    </div>
+    <div id="bottomLine" />
+    <div id="bottomLinedown" />
+</body>
